@@ -1,10 +1,8 @@
 import { defineStore } from "pinia";
+import { PLAYERS, GAME_OPTION } from "@/constants/game";
 
-const PEOPLE = "people";
-const LEFT_PLAYER = "leftPlayer";
-const RIGHT_PLAYER = "rightPlayer";
-const NOT_FOUND = "Not found";
-const OK = "ok";
+const RESPONSE_OK = 200;
+const RESPONSE_NOT_FOUND = 404;
 const MAX_NUMBER = 50;
 
 interface MainStore {
@@ -15,6 +13,7 @@ interface MainStore {
   scoreRightPlayer: number;
   loading: boolean;
   winner: string;
+  draw: boolean;
   notFoundPeople: number[];
   notFoundStarships: number[];
 }
@@ -28,6 +27,7 @@ export const useMainStore = defineStore("main", {
     scoreRightPlayer: 0,
     loading: false,
     winner: "",
+    draw: false,
     notFoundPeople: [],
     notFoundStarships: [],
   }),
@@ -42,7 +42,7 @@ export const useMainStore = defineStore("main", {
         do {
           number = Math.floor(Math.random() * MAX_NUMBER) + 1;
         } while (
-          this.gameOption === PEOPLE
+          this.gameOption === GAME_OPTION.PEOPLE
             ? this.notFoundPeople.includes(number)
             : this.notFoundStarships.includes(number)
         );
@@ -51,14 +51,14 @@ export const useMainStore = defineStore("main", {
           let response: any = await fetch(
             `https://www.swapi.tech/api/${this.gameOption}/${number}/`
           );
-          response = await response.json();
 
-          if (response.message === NOT_FOUND) {
-            this.gameOption === PEOPLE
+          if (response.status === RESPONSE_NOT_FOUND) {
+            this.gameOption === GAME_OPTION.PEOPLE
               ? this.notFoundPeople.push(number)
               : this.notFoundStarships.push(number);
           }
-          if (response.message === OK) {
+          if (response.status === RESPONSE_OK) {
+            response = await response.json();
             player = response.result.properties;
           }
         } catch (error) {
@@ -76,7 +76,7 @@ export const useMainStore = defineStore("main", {
       this.rightPlayer = await this.fetchPlayerData();
 
       const getPlayerValue = (player: any, gameOption: string | null) => {
-        return gameOption === PEOPLE
+        return gameOption === GAME_OPTION.PEOPLE
           ? Number(player.mass.replace(/,/g, ""))
           : Number(player.crew.replace(/,/g, ""));
       };
@@ -87,11 +87,13 @@ export const useMainStore = defineStore("main", {
         this.gameOption
       );
 
-      if (playerLeftScore > playerRightScore) {
-        this.winner = LEFT_PLAYER;
+      if (playerLeftScore === playerRightScore) {
+        this.draw = true
+      } else if (playerLeftScore > playerRightScore) {
+        this.winner = PLAYERS.LEFT_PLAYER;
         this.scoreLeftPlayer++;
       } else {
-        this.winner = RIGHT_PLAYER;
+        this.winner = PLAYERS.RIGHT_PLAYER;
         this.scoreRightPlayer++;
       }
 

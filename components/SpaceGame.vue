@@ -5,28 +5,20 @@
 
   <v-row class="text-center mt-1">
     <v-col cols="6">
-      <v-card
-        class="mx-auto mt-5 py-5"
-        max-width="400"
-        :color="winner === 'leftPlayer' ? 'primary' : 'default'"
+      <SpaceGameCard
+        :color="winner === PLAYERS.LEFT_PLAYER ? 'primary' : 'default'"
         :loading="loading"
-      >
-        <v-card-title class="font-weight-bold">Player Left</v-card-title>
-        <v-card-subtitle class="font-weight-medium">Score:</v-card-subtitle>
-        <v-card-text class="text-h6">{{ scoreLeftPlayer }}</v-card-text>
-      </v-card>
+        playerName="Player Left"
+        :score="scoreLeftPlayer"
+      />
     </v-col>
     <v-col cols="6">
-      <v-card
-        class="mx-auto mt-5 py-5"
-        max-width="400"
-        :color="winner === 'rightPlayer' ? 'primary' : 'default'"
+      <SpaceGameCard
+        :color="winner === PLAYERS.RIGHT_PLAYER ? 'primary' : 'default'"
         :loading="loading"
-      >
-        <v-card-title class="font-weight-bold">Player Right</v-card-title>
-        <v-card-subtitle class="font-weight-medium">Score:</v-card-subtitle>
-        <v-card-text class="text-h6">{{ scoreRightPlayer }}</v-card-text>
-      </v-card>
+        playerName="Player Right"
+        :score="scoreRightPlayer"
+      />
     </v-col>
   </v-row>
 
@@ -38,6 +30,7 @@
     >
       <span class="font-weight-bold">{{ winnerName }}</span> won!
     </p>
+    <p class="text-center text-h6 font-weight-bold" v-show="draw">DRAW!</p>
   </div>
 
   <div class="d-flex flex-column mx-auto w-50 mt-2">
@@ -67,15 +60,15 @@
       <v-radio-group inline v-model="selectedOption" class="px-2">
         <v-radio
           label="People"
-          value="people"
+          :value="GAME_OPTION.PEOPLE"
           color="primary"
-          @click="selectOption('people')"
+          @click="selectOption(GAME_OPTION.PEOPLE)"
         />
         <v-radio
           label="Starships"
-          value="starships"
+          :value="GAME_OPTION.STARSHIPS"
           color="primary"
-          @click="selectOption('starships')"
+          @click="selectOption(GAME_OPTION.STARSHIPS)"
         />
       </v-radio-group>
       <v-card-actions>
@@ -92,15 +85,19 @@
 </template>
 <script setup lang="ts">
 import { useMainStore } from "@/store/index";
+import { PLAYERS, GAME_OPTION } from "@/constants/game";
 
 const store = useMainStore();
 const scoreLeftPlayer = computed(() => store.scoreLeftPlayer);
 const scoreRightPlayer = computed(() => store.scoreRightPlayer);
 const loading = computed(() => store.loading);
 const winner = computed(() => store.winner);
+const draw = computed(() => store.draw);
 const winnerName = computed(() => {
   if (store.winner) {
-    return store.winner === "leftPlayer" ? "Player Left" : "Player Right";
+    return store.winner === PLAYERS.LEFT_PLAYER
+      ? "Player Left"
+      : "Player Right";
   }
 });
 const selectedOption = computed(() => store.gameOption);
