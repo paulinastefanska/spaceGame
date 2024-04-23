@@ -7,9 +7,14 @@ export default defineConfig({
     globals: true,
     server: {
       deps: {
-        inline: ['vuetify'],
+        inline: ["vuetify"],
       },
     },
     environment: "jsdom",
+  },
+  resolve: {
+    alias: {
+      '@/': new URL('./src/', import.meta.url).pathname, 
+    }
   },
 });

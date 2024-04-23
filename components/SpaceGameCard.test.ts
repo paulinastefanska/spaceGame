@@ -20,11 +20,24 @@ describe("SpaceGameCard", () => {
     expect(SpaceGameCard).toBeDefined();
   });
 
-  test("component renders v-card properly", () => {
-    expect(wrapper.find("v-card").exists()).toBe(true);
-  });
+  test('renders props properly', () => {
+    const color = 'yellow'
+    const loading = true
+    const playerName = 'Player 1'
+    const score = 100
 
-  test("component renders v-card-title properly", () => {
-    expect(wrapper.find("v-card-title").exists()).toBe(true);
-  });
+    const wrapper = mount(SpaceGameCard, {
+      props: {
+        color,
+        loading,
+        playerName,
+        score
+      }
+    })
+
+    expect(wrapper.props().color).toBe(color)
+    expect(wrapper.props().loading).toBe(loading)
+    expect(wrapper.props().playerName).toBe(playerName)
+    expect(wrapper.props().score).toBe(score)
+  })
 });
