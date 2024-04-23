@@ -1,6 +1,28 @@
-# Nuxt 3 Minimal Starter
+# Space Game
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+[Demo](https://space-game-person-vs-starship.web.app)
+
+### Tech stack:
+Nuxt 3, Google Firebase, Pinia, Vuetify
+
+## Login data:
+email: admin@admin.com
+password: admin123
+
+## .env
+
+Please make sure you add your .env file
+(public env data for testing purposes only)
+
+```bash
+FIREBASE_API_KEY=AIzaSyBrPxCAa08QfDd6SJvjrEqshKYSDNp2VpE
+FIREBASE_AUTH_DOMAIN=space-game-person-vs-starship.firebaseapp.com
+FIREBASE_PROJECT_ID=space-game-person-vs-starship
+FIREBASE_STORAGE_BUCKET=space-game-person-vs-starship.appspot.com
+FIREBASE_MESSAGING_SENDER_ID=200579881696
+FIREBASE_APP_ID=1:200579881696:web:6ff558cabc2b3e3af84e85
+FIREBASE_MEASUREMENT_ID=G-6CZRH7XMNL
+```
 
 ## Setup
 
