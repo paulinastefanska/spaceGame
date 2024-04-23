@@ -57,6 +57,8 @@
     />
   </div>
 
+  <!-- TODO: Add apexcharts here -->
+
   <!-- dialogs -->
   <v-dialog v-model="dialog" max-width="480">
     <v-card class="pa-2">
