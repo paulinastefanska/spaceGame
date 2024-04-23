@@ -16,6 +16,7 @@ describe("SpaceGameCard", () => {
   });
 
   test("component SpaceGameCard renders properly", () => {
+    console.log('wrapper', wrapper);
     expect(SpaceGameCard).toBeDefined();
   });
 
