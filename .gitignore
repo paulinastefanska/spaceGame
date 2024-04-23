@@ -5,6 +5,9 @@
 .nitro
 .cache
 dist
+.firebase
+.github
+.firebaserc
 
 # Node dependencies
 node_modules
