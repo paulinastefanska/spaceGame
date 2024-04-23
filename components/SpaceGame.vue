@@ -30,7 +30,13 @@
     >
       <span class="font-weight-bold">{{ winnerName }}</span> won!
     </p>
-    <p class="text-center text-h6 font-weight-bold" v-show="draw">DRAW!</p>
+    <p
+      class="text-center text-h6 font-weight-bold"
+      :class="{ 'text-disabled': loading }"
+      v-show="draw"
+    >
+      DRAW!
+    </p>
   </div>
 
   <div class="d-flex flex-column mx-auto w-50 mt-2">
@@ -84,10 +90,10 @@
   </v-dialog>
 </template>
 <script setup lang="ts">
-import { useMainStore } from "@/store/index";
+import { useGameStore } from "@/store/game";
 import { PLAYERS, GAME_OPTION } from "@/constants/game";
 
-const store = useMainStore();
+const store = useGameStore();
 const scoreLeftPlayer = computed(() => store.scoreLeftPlayer);
 const scoreRightPlayer = computed(() => store.scoreRightPlayer);
 const loading = computed(() => store.loading);

@@ -5,7 +5,7 @@ const RESPONSE_OK = 200;
 const RESPONSE_NOT_FOUND = 404;
 const MAX_NUMBER = 50;
 
-interface MainStore {
+interface GameStore {
   gameOption: string | null;
   leftPlayer: any;
   rightPlayer: any;
@@ -18,8 +18,9 @@ interface MainStore {
   notFoundStarships: number[];
 }
 
-export const useMainStore = defineStore("main", {
-  state: (): MainStore => ({
+export const useGameStore = defineStore({
+  id: 'game-store',
+  state: (): GameStore => ({
     gameOption: null,
     leftPlayer: null,
     rightPlayer: null,
