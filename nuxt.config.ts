@@ -36,4 +36,8 @@ export default defineNuxtConfig({
       measurementId: process.env.FIREBASE_MEASUREMENT_ID,
     },
   },
+
+  nitro: {
+    preset: "firebase",
+  },
 });
