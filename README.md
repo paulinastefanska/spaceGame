@@ -1,8 +1,7 @@
 # Space Game
 
-### [Demo](https://space-game-person-vs-starship.web.app)
-
 ### Tech stack [Nuxt 3, Google Firebase, Pinia, Vuetify]
+### [Demo](https://space-game-person-vs-starship.web.app)
 
 ## Login data:
 
@@ -11,7 +10,7 @@ password: admin123
 
 ## .env
 
-Please make sure you add your .env file </br>
+Please make sure you add your `.env` file: </br>
 (public env data for testing purposes only)
 
 ```bash
