@@ -5,21 +5,38 @@ const RESPONSE_OK = 200;
 const RESPONSE_NOT_FOUND = 404;
 const MAX_NUMBER = 50;
 
+interface FetchResponse {
+  status: number;
+  json: () => Promise<ResponseData>;
+}
+
+interface Player {
+  name: string;
+  mass: string;
+  crew: string;
+}
+
+interface ResponseData {
+  message: string;
+  result: {
+    properties: Player;
+  };
+}
 interface GameStore {
   gameOption: string | null;
-  leftPlayer: any;
-  rightPlayer: any;
+  leftPlayer: Player | null;
+  rightPlayer: Player | null;
   scoreLeftPlayer: number;
   scoreRightPlayer: number;
   loading: boolean;
-  winner: string;
+  winner: string | null;
   draw: boolean;
   notFoundPeople: number[];
   notFoundStarships: number[];
 }
 
 export const useGameStore = defineStore({
-  id: 'game-store',
+  id: "game-store",
   state: (): GameStore => ({
     gameOption: null,
     leftPlayer: null,
@@ -27,7 +44,7 @@ export const useGameStore = defineStore({
     scoreLeftPlayer: 0,
     scoreRightPlayer: 0,
     loading: false,
-    winner: "",
+    winner: null,
     draw: false,
     notFoundPeople: [],
     notFoundStarships: [],
@@ -35,7 +52,7 @@ export const useGameStore = defineStore({
 
   actions: {
     async fetchPlayerData() {
-      let player: any;
+      let player: Player | null = null;
 
       while (!player) {
         let number: number;
@@ -49,7 +66,7 @@ export const useGameStore = defineStore({
         );
 
         try {
-          let response: any = await fetch(
+          let response: FetchResponse = await fetch(
             `https://www.swapi.tech/api/${this.gameOption}/${number}/`
           );
 
@@ -59,8 +76,8 @@ export const useGameStore = defineStore({
               : this.notFoundStarships.push(number);
           }
           if (response.status === RESPONSE_OK) {
-            response = await response.json();
-            player = response.result.properties;
+            const data: ResponseData = await response.json();
+            player = data.result.properties;
           }
         } catch (error) {
           console.error(error);
@@ -76,7 +93,7 @@ export const useGameStore = defineStore({
       this.leftPlayer = await this.fetchPlayerData();
       this.rightPlayer = await this.fetchPlayerData();
 
-      const getPlayerValue = (player: any, gameOption: string | null) => {
+      const getPlayerValue = (player: Player, gameOption: string | null) => {
         return gameOption === GAME_OPTION.PEOPLE
           ? Number(player.mass.replace(/,/g, ""))
           : Number(player.crew.replace(/,/g, ""));
@@ -88,8 +105,11 @@ export const useGameStore = defineStore({
         this.gameOption
       );
 
+      this.draw = false;
+
       if (playerLeftScore === playerRightScore) {
-        this.draw = true
+        this.draw = true;
+        this.winner = null;
       } else if (playerLeftScore > playerRightScore) {
         this.winner = PLAYERS.LEFT_PLAYER;
         this.scoreLeftPlayer++;
@@ -106,7 +126,7 @@ export const useGameStore = defineStore({
       this.rightPlayer = null;
       this.scoreLeftPlayer = 0;
       this.scoreRightPlayer = 0;
-      this.winner = "";
+      this.winner = null;
     },
 
     selectOption(resource: string) {

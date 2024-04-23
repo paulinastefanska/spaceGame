@@ -1,6 +1,6 @@
 import { mount } from "@vue/test-utils";
 import { createVuetify } from 'vuetify'
-import Login from "../components/Login.vue";
+import LoginCard from "./LoginCard.vue";
 import SpaceGame from "../components/SpaceGame.vue";
 import { createRouter, createWebHistory } from 'vue-router'
 import { createPinia } from 'pinia'
@@ -11,7 +11,7 @@ const vuetify = createVuetify()
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', component: Login },
+    { path: '/', component: LoginCard },
     { path: '/game', component: SpaceGame },
   ], 
 });
@@ -21,11 +21,11 @@ const gameStore = useGameStore(pinia)
 
 gameStore.$reset()
 
-describe("LoginComponent", () => {
+describe("LoginCard", () => {
   let wrapper: any;
 
   beforeEach(() => {
-    wrapper = mount(Login, {
+    wrapper = mount(LoginCard, {
       global: {
         plugins: [vuetify, pinia],
         mocks: {
@@ -40,6 +40,6 @@ describe("LoginComponent", () => {
 
   test("component Login renders properly", () => {
     console.log('wrapper', wrapper);
-    expect(Login).toBeDefined();
+    expect(LoginCard).toBeDefined();
   });
 });

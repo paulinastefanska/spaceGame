@@ -4,20 +4,12 @@
   </h2>
 
   <v-row class="text-center mt-1">
-    <v-col cols="6">
+    <v-col cols="6" v-for="(player, index) in players" :key="index">
       <SpaceGameCard
-        :color="winner === PLAYERS.LEFT_PLAYER ? 'primary' : 'default'"
+        :color="player.winner ? 'primary' : 'default'"
         :loading="loading"
-        playerName="Player Left"
-        :score="scoreLeftPlayer"
-      />
-    </v-col>
-    <v-col cols="6">
-      <SpaceGameCard
-        :color="winner === PLAYERS.RIGHT_PLAYER ? 'primary' : 'default'"
-        :loading="loading"
-        playerName="Player Right"
-        :score="scoreRightPlayer"
+        :playerName="player.name"
+        :score="player.score"
       />
     </v-col>
   </v-row>
@@ -31,9 +23,9 @@
       <span class="font-weight-bold">{{ winnerName }}</span> won!
     </p>
     <p
+      v-show="draw"
       class="text-center text-h6 font-weight-bold"
       :class="{ 'text-disabled': loading }"
-      v-show="draw"
     >
       DRAW!
     </p>
@@ -98,18 +90,35 @@ import { PLAYERS, GAME_OPTION } from "@/constants/game";
 const store = useGameStore();
 const scoreLeftPlayer = computed(() => store.scoreLeftPlayer);
 const scoreRightPlayer = computed(() => store.scoreRightPlayer);
-const loading = computed(() => store.loading);
+const leftPlayerName = computed(() => store.leftPlayer?.name || "Player Name");
+const rightPlayerName = computed(
+  () => store.rightPlayer?.name || "Player Name"
+);
 const winner = computed(() => store.winner);
-const draw = computed(() => store.draw);
 const winnerName = computed(() => {
   if (store.winner) {
-    return store.winner === PLAYERS.LEFT_PLAYER
-      ? "Player Left"
-      : "Player Right";
+    return store.winner && store.winner === PLAYERS.LEFT_PLAYER
+      ? leftPlayerName
+      : rightPlayerName;
   }
 });
+const draw = computed(() => store.draw);
 const selectedOption = computed(() => store.gameOption);
+const loading = computed(() => store.loading);
+
 const dialog = selectedOption.value ? ref(false) : ref(true);
+const players = reactive([
+  {
+    name: leftPlayerName,
+    score: scoreLeftPlayer,
+    winner: computed(() => winner.value === PLAYERS.LEFT_PLAYER),
+  },
+  {
+    name: rightPlayerName,
+    score: scoreRightPlayer,
+    winner: computed(() => winner.value === PLAYERS.RIGHT_PLAYER),
+  },
+]);
 
 const selectOption = (value: string) => {
   store.selectOption(value);

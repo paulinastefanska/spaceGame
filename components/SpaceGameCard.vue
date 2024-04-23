@@ -14,19 +14,19 @@
 const props = defineProps({
   color: {
     type: String,
-    default: ""
+    default: "",
   },
   loading: {
     type: Boolean,
-    default: false
+    default: false,
   },
   playerName: {
     type: String,
-    default: ""
+    default: "",
   },
   score: {
     type: Number,
-    default: 0
-  }
-})
+    default: 0,
+  },
+});
 </script>
