@@ -4,10 +4,16 @@ export default defineNuxtConfig({
   ssr: false,
 
   typescript: {
-    typeCheck: true
+    typeCheck: true,
   },
 
-  modules: ["@nuxt/eslint", "vuetify-nuxt-module", "nuxt-vuefire", '@pinia/nuxt'],
+  modules: [
+    "@nuxt/eslint",
+    "vuetify-nuxt-module",
+    "nuxt-vuefire",
+    "@pinia/nuxt",
+    "@nuxt/test-utils/module",
+  ],
 
   vuetify: {
     moduleOptions: {
@@ -15,7 +21,7 @@ export default defineNuxtConfig({
     },
     vuetifyOptions: {
       /* vuetify options */
-    }
+    },
   },
 
   vuefire: {
@@ -29,5 +35,5 @@ export default defineNuxtConfig({
       appId: process.env.FIREBASE_APP_ID,
       measurementId: process.env.FIREBASE_MEASUREMENT_ID,
     },
-  }
-})
+  },
+});
