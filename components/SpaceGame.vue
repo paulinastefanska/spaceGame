@@ -33,6 +33,7 @@
 
   <div class="d-flex flex-column mx-auto w-50 mt-2">
     <v-btn
+      id="fight-button"
       text="Fight"
       color="primary"
       size="large"
@@ -40,6 +41,7 @@
       @click="fight"
     />
     <v-btn
+      id="play-button"
       text="START NEW GAME"
       variant="outlined"
       color="primary"
@@ -52,19 +54,21 @@
   <!-- TODO: Add apexcharts here -->
 
   <!-- dialogs -->
-  <v-dialog v-model="dialog" max-width="480">
+  <v-dialog id="popup" v-model="dialog" max-width="480">
     <v-card class="pa-2">
       <v-card-title class="text-h5 font-weight-medium text-primary"
         >Select a character</v-card-title
       >
       <v-radio-group inline v-model="selectedOption" class="px-2">
         <v-radio
+          id="people-radio"
           label="People"
           :value="GAME_OPTION.PEOPLE"
           color="primary"
           @click="selectOption(GAME_OPTION.PEOPLE)"
         />
         <v-radio
+          id="starships-radio"
           label="Starships"
           :value="GAME_OPTION.STARSHIPS"
           color="primary"
@@ -74,7 +78,8 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn
-          text="START GAME"
+          id="close-button"
+          text="CLOSE"
           color="primary"
           variant="elevated"
           @click="dialog = false"
@@ -84,8 +89,9 @@
   </v-dialog>
 </template>
 <script setup lang="ts">
-import { useGameStore } from "@/store/game";
-import { PLAYERS, GAME_OPTION } from "@/constants/game";
+import { ref, computed, reactive } from "vue";
+import { useGameStore } from "../store/game";
+import { PLAYERS, GAME_OPTION } from "../constants/game";
 
 const store = useGameStore();
 const scoreLeftPlayer = computed(() => store.scoreLeftPlayer);
@@ -107,7 +113,7 @@ const selectedOption = computed(() => store.gameOption);
 const loading = computed(() => store.loading);
 
 const dialog = selectedOption.value ? ref(false) : ref(true);
-const players = reactive([
+const players = ref([
   {
     name: leftPlayerName,
     score: scoreLeftPlayer,

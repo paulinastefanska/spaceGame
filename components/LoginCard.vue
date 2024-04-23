@@ -4,7 +4,7 @@
       >Login to your space journey</v-card-title
     >
 
-    <v-form v-model="valid" ref="form" lazy-validation @keyup.enter="loginUser">
+    <v-form v-model="valid" ref="form" lazy-validation @submit.prevent="loginUser">
       <v-container>
         <v-alert
           v-show="errorMsg"
@@ -15,6 +15,7 @@
           class="mb-4"
         />
         <v-text-field
+          id="email-input"
           label="Email"
           v-model="email"
           required
@@ -22,6 +23,7 @@
           color="primary"
         />
         <v-text-field
+          id="password-input"
           label="Password"
           v-model="password"
           type="password"
@@ -31,21 +33,23 @@
           class="mt-2"
         />
       </v-container>
-    </v-form>
 
-    <v-card-actions class="px-4">
-      <v-btn
-        variant="elevated"
-        color="primary"
-        @click="loginUser"
-        :disabled="!valid || loading"
-        class="w-100"
-        >Login</v-btn
-      >
-    </v-card-actions>
+      <v-card-actions class="px-4">
+        <v-btn
+          id="login-button"
+          variant="elevated"
+          color="primary"
+          type="submit"
+          :disabled="!valid || loading"
+          class="w-100"
+          >Login</v-btn
+        >
+      </v-card-actions>
+    </v-form>
   </v-card>
 </template>
 <script setup lang="ts">
+import { ref, computed } from "vue";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import { useRouter } from "vue-router";

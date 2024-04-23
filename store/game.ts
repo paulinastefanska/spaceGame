@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { PLAYERS, GAME_OPTION } from "@/constants/game";
+import { PLAYERS, GAME_OPTION } from "../constants/game";
 
 const RESPONSE_OK = 200;
 const RESPONSE_NOT_FOUND = 404;
@@ -22,6 +22,7 @@ interface ResponseData {
     properties: Player;
   };
 }
+
 interface GameStore {
   gameOption: string | null;
   leftPlayer: Player | null;
@@ -54,6 +55,7 @@ export const useGameStore = defineStore({
     async fetchPlayerData() {
       let player: Player | null = null;
 
+      // TO DO if too many calls - add every player to the store
       while (!player) {
         let number: number;
 
@@ -129,8 +131,8 @@ export const useGameStore = defineStore({
       this.winner = null;
     },
 
-    selectOption(resource: string) {
-      this.gameOption = resource;
+    selectOption(data: string) {
+      this.gameOption = data;
     },
   },
 });

@@ -1,6 +1,6 @@
 # Space Game
 
-### Tech stack [Nuxt 3, Google Firebase, Pinia, Vuetify]
+### Tech stack [Nuxt 3, Google Firebase, Pinia, Vuetify 3, Vitest, Cypress]
 ### [Demo](https://space-game-person-vs-starship.web.app)
 
 ## Login data:
