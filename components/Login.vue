@@ -3,9 +3,6 @@
     <v-card-title class="text-primary"
       >Login to your space journey</v-card-title
     >
-    <v-card-subtitle
-      >email: admin@admin.com | password: admin123</v-card-subtitle
-    >
 
     <v-form v-model="valid" ref="form" lazy-validation @keyup.enter="loginUser">
       <v-container>
