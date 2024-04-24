@@ -29,6 +29,8 @@ interface GameStore {
   rightPlayer: Player | null;
   scoreLeftPlayer: number;
   scoreRightPlayer: number;
+  lostLeftPlayer: number;
+  lostRightPlayer: number;
   loading: boolean;
   winner: string | null;
   draw: boolean;
@@ -44,6 +46,8 @@ export const useGameStore = defineStore({
     rightPlayer: null,
     scoreLeftPlayer: 0,
     scoreRightPlayer: 0,
+    lostLeftPlayer: 0,
+    lostRightPlayer: 0,
     loading: false,
     winner: null,
     draw: false,
@@ -96,9 +100,11 @@ export const useGameStore = defineStore({
       this.rightPlayer = await this.fetchPlayerData();
 
       const getPlayerValue = (player: Player, gameOption: string | null) => {
-        return gameOption === GAME_OPTION.PEOPLE
-          ? Number(player.mass.replace(/,/g, ""))
-          : Number(player.crew.replace(/,/g, ""));
+        if (gameOption === GAME_OPTION.PEOPLE) {
+          return player && player.mass ? Number(player.mass.replace(/,/g, "")) : 0;
+        } else {
+          return player && player.crew ? Number(player.crew.replace(/,/g, "")) : 0;
+        }
       };
 
       const playerLeftScore = getPlayerValue(this.leftPlayer, this.gameOption);
@@ -115,9 +121,11 @@ export const useGameStore = defineStore({
       } else if (playerLeftScore > playerRightScore) {
         this.winner = PLAYERS.LEFT_PLAYER;
         this.scoreLeftPlayer++;
+        this.lostRightPlayer++;
       } else {
         this.winner = PLAYERS.RIGHT_PLAYER;
         this.scoreRightPlayer++;
+        this.lostLeftPlayer++;
       }
 
       this.loading = false;
@@ -128,6 +136,8 @@ export const useGameStore = defineStore({
       this.rightPlayer = null;
       this.scoreLeftPlayer = 0;
       this.scoreRightPlayer = 0;
+      this.lostLeftPlayer = 0;
+      this.lostRightPlayer = 0;
       this.winner = null;
     },
 

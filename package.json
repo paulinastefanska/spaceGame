@@ -14,12 +14,14 @@
   "dependencies": {
     "@nuxt/eslint": "^0.3.8",
     "@pinia/nuxt": "^0.5.1",
+    "apexcharts": "^3.49.0",
     "firebase": "^10.11.0",
     "nuxt": "^3.11.2",
     "nuxt-vuefire": "^1.0.2",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
+    "vue3-apexcharts": "^1.5.2",
     "vuefire": "^3.1.23",
     "vuetify-nuxt-module": "^0.13.2"
   },

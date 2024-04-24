@@ -1,10 +1,5 @@
 <template>
-  <v-card
-    class="mx-auto mt-5 py-5"
-    max-width="400"
-    :color="color"
-    :loading="loading"
-  >
+  <v-card class="mx-auto mt-5 py-10" :color="color" :loading="loading">
     <v-card-title class="font-weight-bold">{{ playerName }}</v-card-title>
     <v-card-subtitle class="font-weight-medium">Score:</v-card-subtitle>
     <v-card-text class="text-h6">{{ score }}</v-card-text>
