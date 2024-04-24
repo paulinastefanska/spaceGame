@@ -10,7 +10,6 @@ describe('GameStore', () => {
   })
 
   test('store renders properly', () => {
-    console.log("store", store)
     expect(store).toBeDefined();
   })
 

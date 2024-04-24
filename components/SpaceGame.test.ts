@@ -34,7 +34,7 @@ describe('SpaceGame', () => {
   })
 
   test('calls store.startNewGame when the play again button is clicked', async () => {
-    await wrapper.find('#play-button').trigger('click')
+    await wrapper.find('#play-again-button').trigger('click')
     expect(store.startNewGame).toHaveBeenCalled()
   })
 })

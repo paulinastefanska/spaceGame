@@ -49,6 +49,7 @@
   </v-card>
 </template>
 <script setup lang="ts">
+// unit test cant handle @ imports
 import { ref, computed } from "vue";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
