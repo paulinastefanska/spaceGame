@@ -9,7 +9,9 @@
         :color="player.winner ? 'primary' : 'default'"
         :loading="loading"
         :playerName="player.name"
+        :playerValue="player.value"
         :score="player.score"
+        :selectedOption="selectedOption"
       />
     </v-col>
   </v-row>
@@ -127,6 +129,8 @@ const scoreLeftPlayer = computed(() => store.scoreLeftPlayer);
 const scoreRightPlayer = computed(() => store.scoreRightPlayer);
 const lostLeftPlayer = computed(() => store.lostLeftPlayer);
 const lostRightPlayer = computed(() => store.lostRightPlayer);
+const valuePlayerLeft = computed(() => store.valuePlayerLeft);
+const valuePlayerRight = computed(() => store.valuePlayerRight);
 const leftPlayerName = computed(() => store.leftPlayer?.name || "Player Name");
 const rightPlayerName = computed(
   () => store.rightPlayer?.name || "Player Name"
@@ -149,16 +153,18 @@ const winnerName = computed(() => {
 const draw = computed(() => store.draw);
 const selectedOption = computed(() => store.gameOption);
 const loading = computed(() => store.loading);
-
 const dialog = selectedOption.value ? ref(false) : ref(true);
+
 const players = ref([
   {
     name: leftPlayerName,
+    value: valuePlayerLeft,
     score: scoreLeftPlayer,
     winner: computed(() => winner.value === PLAYERS.LEFT_PLAYER),
   },
   {
     name: rightPlayerName,
+    value: valuePlayerRight,
     score: scoreRightPlayer,
     winner: computed(() => winner.value === PLAYERS.RIGHT_PLAYER),
   },
